@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int main() {
+    int aRows, aCols, bRows, bCols;
+    printf("Enter rows and columns for first matrix: ");
+    scanf("%d %d", &aRows, &aCols);
+    printf("Enter rows and columns for second matrix: ");
+    scanf("%d %d", &bRows, &bCols);
+    
+    if (aCols != bRows) {
+        printf("Matrix multiplication is not possible.\n");
+        return 1;
+    }
+
+    int a[aRows][aCols], b[bRows][bCols], result[aRows][bCols];
+
+    for (int i = 0; i < aRows; i++) {
+        for (int j = 0; j < bCols; j++) {
+            result[i][j] = 0;
+        }
+    }
+
+
+    printf("Enter elements of first matrix:\n");
+    for (int i = 0; i < aRows; i++) {
+        for (int j = 0; j < aCols; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+
+    printf("Enter elements of second matrix:\n");
+    for (int i = 0; i < bRows; i++) {
+        for (int j = 0; j < bCols; j++) {
+            scanf("%d", &b[i][j]);
+        }
+    }
+
+    for (int i = 0; i < aRows; i++) {
+        for (int j = 0; j < bCols; j++) {
+            for (int k = 0; k < aCols; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+
+    printf("Result matrix:\n");
+    for (int i = 0; i < aRows; i++) {
+        for (int j = 0; j < bCols; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
