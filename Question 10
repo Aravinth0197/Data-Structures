@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertAtBeginning(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void insertAtEnd(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void deleteNode(struct Node** head, int value) {
+    struct Node* temp = *head;
+    struct Node* prev = NULL;
+
+    if (temp != NULL && temp->data == value) {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+
+    while (temp != NULL && temp->data != value) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Element not found.\n");
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+}
+
+void displayList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    insertAtBeginning(&head, 10);
+    insertAtBeginning(&head, 20);
+    insertAtEnd(&head, 30);
+    insertAtEnd(&head, 40);
+
+    printf("Linked list after insertions: ");
+    displayList(head);
+
+    deleteNode(&head, 20);
+
+    printf("Linked list after deletion of 20: ");
+    displayList(head);
+
+    deleteNode(&head, 50);
+
+    return 0;
+}
